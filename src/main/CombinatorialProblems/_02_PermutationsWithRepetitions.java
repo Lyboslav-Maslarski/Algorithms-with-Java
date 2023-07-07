@@ -1,39 +1,42 @@
 package CombinatorialProblems;
 
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 public class _02_PermutationsWithRepetitions {
     static String[] elements;
-    static String[] currentElements;
-    static boolean[] isUsed;
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         elements = sc.nextLine().split("\\s+");
-        currentElements = new String[elements.length];
-        isUsed = new boolean[elements.length];
 
         permute(0);
     }
 
     private static void permute(int index) {
         if (index == elements.length) {
-            printResult(currentElements);
+            System.out.println(String.join(" ", elements));
             return;
         }
 
-        for (int i = 0; i < elements.length; i++) {
-            if (!isUsed[i]) {
-                isUsed[i] = true;
-                currentElements[index] = elements[i];
+        permute(index + 1);
+        Set<String> permutes = new HashSet<>();
+        permutes.add(elements[index]);
+        for (int i = index + 1; i < elements.length; i++) {
+            if (!permutes.contains(elements[i])) {
+                swap(index, i);
                 permute(index + 1);
-                isUsed[i] = false;
+                swap(index, i);
+                permutes.add(elements[i]);
             }
         }
     }
 
-    private static void printResult(String[] currentElements) {
-        System.out.println(String.join(" ", currentElements));
+    private static void swap(int index, int i) {
+        String temp = elements[index];
+        elements[index] = elements[i];
+        elements[i] = temp;
     }
 }
