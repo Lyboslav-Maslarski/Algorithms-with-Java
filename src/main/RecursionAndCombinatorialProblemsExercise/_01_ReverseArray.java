@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 public class _01_ReverseArray {
     public static void main(String[] args) {
-
         Scanner sc = new Scanner(System.in);
 
         String[] elements = sc.nextLine().split("\\s+");
