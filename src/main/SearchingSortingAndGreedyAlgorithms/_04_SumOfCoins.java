@@ -1,5 +1,7 @@
 package SearchingSortingAndGreedyAlgorithms;
 
+import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -15,7 +17,6 @@ public class _04_SumOfCoins {
 
         int targetSum = Integer.parseInt(in.nextLine().substring(5));
 
-
         Map<Integer, Integer> usedCoins = chooseCoins(coins, targetSum);
 
         for (Map.Entry<Integer, Integer> usedCoin : usedCoins.entrySet()) {
@@ -24,7 +25,18 @@ public class _04_SumOfCoins {
     }
 
     public static Map<Integer, Integer> chooseCoins(int[] coins, int targetSum) {
-        // TODO
-        return null;
+        Map<Integer, Integer> usedCoins = new LinkedHashMap<>();
+        Arrays.sort(coins);
+        int index = coins.length - 1;
+        while (targetSum > 0 && index >= 0) {
+            int currentCoin = coins[index];
+            int currentCoinCount = targetSum / currentCoin;
+            if (currentCoinCount != 0) {
+                usedCoins.put(currentCoin, currentCoinCount);
+            }
+            targetSum = targetSum % currentCoin;
+            index--;
+        }
+        return usedCoins;
     }
 }

@@ -38,7 +38,33 @@ public class _05_SetCover {
     }
 
     public static List<int[]> chooseSets(List<int[]> sets, int[] universe) {
-        // TODO
-        return null;
+        List<Integer> universeSet = new ArrayList<>();
+        for (int i : universe) {
+            universeSet.add(i);
+        }
+        List<int[]> selectedSets = new ArrayList<>();
+        while (!universeSet.isEmpty()) {
+            int notChosenCount = 0;
+            int[] chosenSet = sets.get(0);
+            for (int[] set : sets) {
+                int count = 0;
+                for (int el : set) {
+                    if (universeSet.contains(el)) {
+                        count++;
+                    }
+                }
+                if (notChosenCount < count) {
+                    notChosenCount = count;
+                    chosenSet = set;
+                }
+            }
+            selectedSets.add(chosenSet);
+            for (int elToRemove : chosenSet) {
+                if (universeSet.contains(elToRemove)) {
+                    universeSet.remove((Integer) elToRemove);
+                }
+            }
+        }
+        return selectedSets;
     }
 }
