@@ -37,5 +37,4 @@ build/
 ### Mac OS ###
 .DS_Store
 
-.zip
-*.zip
+/src/main/GraphTheoryTraversalAndShortestPaths/*.zip
