@@ -1,4 +1,4 @@
-package GraphTheoryTraversalAndShortestPaths;
+package GraphTheoryTraversalAndShortestPathsLab;
 
 import java.util.*;
 import java.util.stream.Collectors;
