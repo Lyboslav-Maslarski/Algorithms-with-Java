@@ -5,6 +5,8 @@ import java.util.*;
 public class _03_CyclesInGraph {
     public static Map<String, List<String>> graph = new HashMap<>();
     public static String source;
+    public static Set<String> visited = new HashSet<>();
+    public static Set<String> cycles = new HashSet<>();
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -19,26 +21,25 @@ public class _03_CyclesInGraph {
             }
 
             graph.putIfAbsent(key, new ArrayList<>());
+            graph.putIfAbsent(tokens[1], new ArrayList<>());
             graph.get(key).add(tokens[1]);
 
             line = sc.nextLine();
         }
 
-        Set<String> visited = new HashSet<>();
-        Set<String> cycles = new HashSet<>();
-        if (graph.size() == 11) {
-            System.out.println("Acyclic: No");
-        } else {
-            try {
-                dfs(source,visited,cycles);
+        try {
+            dfs(source);
+            if (graph.size() != visited.size()) {
+                System.out.println("Acyclic: No");
+            } else {
                 System.out.println("Acyclic: Yes");
-            } catch (IllegalStateException ex) {
-                System.out.println(ex.getMessage());
             }
+        } catch (IllegalStateException ex) {
+            System.out.println(ex.getMessage());
         }
     }
 
-    private static void dfs(String source, Set<String> visited, Set<String> cycles) {
+    private static void dfs(String source) {
         if (cycles.contains(source)) {
             throw new IllegalStateException("Acyclic: No");
         }
@@ -50,12 +51,9 @@ public class _03_CyclesInGraph {
         visited.add(source);
 
         List<String> children = graph.get(source);
-        if (children == null) {
-            return;
-        }
 
         for (String child : children) {
-            dfs(child, visited, cycles);
+            dfs(child);
         }
         cycles.remove(source);
     }
